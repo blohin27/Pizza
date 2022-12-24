@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { observer } from "mobx-react";
 import { storePizza } from "../../store";
-import { toJS } from "mobx";
 
 export const PizzaComponent = observer(() => {
   const arrayItems: any[] = storePizza.getItems();

@@ -4,8 +4,9 @@ import logo from "../../Icon/logo.png";
 import card from "../../Icon/card.png";
 import { Link } from "react-router-dom";
 import { storePizza } from "../../store";
+import { observer } from "mobx-react";
 
-const HeaderComponent = () => {
+const HeaderComponent = observer(() => {
   const [state, setState] = useState();
   return (
     <WrapHeader>
@@ -20,19 +21,19 @@ const HeaderComponent = () => {
       </StyledLogo>
       <Link to={"/cart"}>
         <ShoppingCart>
-          <StyledPrice>{storePizza.shoppingCard.count} Рублей</StyledPrice>
+          <StyledPrice>{storePizza.getAllPrice} Рублей</StyledPrice>
           <StyledVerticalLine />
           <StyledCountItems>
             <StyledIconCard>
               <img src={card} />
             </StyledIconCard>
-            <div>4</div>
+            <div>{storePizza.shoppingCart.count}</div>
           </StyledCountItems>
         </ShoppingCart>
       </Link>
     </WrapHeader>
   );
-};
+});
 
 const StyledIconCard = styled.div`
   padding-right: 5px;

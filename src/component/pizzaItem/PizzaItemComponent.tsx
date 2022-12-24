@@ -3,7 +3,7 @@ import chisburgerPizza from "../../Icon/chisburgerPizza.png";
 import { FC, useState } from "react";
 import { toJS } from "mobx";
 import { observer } from "mobx-react";
-
+import { storePizza } from "../../store";
 export const PizzaItemComponent: FC<any> = observer(({ item }) => {
   const [stateDough1, setStateDough1] = useState(1);
   const [stateDough2, setStateDough2] = useState(0);
@@ -67,7 +67,17 @@ export const PizzaItemComponent: FC<any> = observer(({ item }) => {
 
       <StyledPriceAndButton>
         <StyledPrice>{item.price}</StyledPrice>
-        <StyledButton>+ Добавить</StyledButton>
+        <StyledButton
+          onClick={() => {
+            storePizza.addPizzaShoppingCart(item);
+          }}
+          countPizza={storePizza.countPizzaById(item)}
+        >
+          + Добавить{" "}
+          {storePizza.countPizzaById(item) === 0
+            ? ""
+            : storePizza.countPizzaById(item)}
+        </StyledButton>
       </StyledPriceAndButton>
     </WrapperPizzaItem>
   );
@@ -101,12 +111,14 @@ const StyledPrice = styled.div`
   letter-spacing: 0.015em;
   color: #000000;
 `;
-const StyledButton = styled.div`
+const StyledButton = styled.div<{ countPizza?: number }>`
   cursor: pointer;
   border: 2px solid #eb5a1e;
   border-radius: 25px;
   color: #eb5a1e;
   padding: 2px 10px 2px 10px;
+  background: ${(props) => (props.countPizza !== 0 ? " #eb5a1e" : "")};
+  color: ${(props) => (props.countPizza !== 0 ? " white" : "")};
   &:hover {
     background: #eb5a1e;
     color: white;
