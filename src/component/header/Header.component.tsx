@@ -10,6 +10,7 @@ const HeaderComponent = observer(() => {
   const [state, setState] = useState();
   return (
     <WrapHeader>
+      <Link to={"/"} referrerPolicy={"origin"}>
       <StyledLogo>
         <StyledLogoIcon>
           <img src={logo} />
@@ -19,6 +20,7 @@ const HeaderComponent = observer(() => {
           <StyledSlogan>самая вкусная пицца во вселенной</StyledSlogan>
         </div>
       </StyledLogo>
+        </Link>
       <Link to={"/cart"}>
         <ShoppingCart>
           <StyledPrice>{storePizza.getAllPrice} Рублей</StyledPrice>
