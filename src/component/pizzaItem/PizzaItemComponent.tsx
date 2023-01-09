@@ -1,98 +1,138 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import chisburgerPizza from "../../Icon/chisburgerPizza.png";
 import { FC, useState } from "react";
 import { toJS } from "mobx";
 import { observer } from "mobx-react";
-import { storePizza } from "../../store";
+import { PizzaItem, storePizza } from "../../store";
+import { Link } from "react-router-dom";
+
 export const PizzaItemComponent: FC<any> = observer(({ item }) => {
-  const [stateDough1, setStateDough1] = useState(1);
-  const [stateDough2, setStateDough2] = useState(0);
-  const [stateSize, setStateSize] = useState(26);
-  console.log(toJS(item));
+  const [itemPizza, setItemPizza] = useState<PizzaItem>({ ...item });
 
   return (
     <WrapperPizzaItem>
-      <StyledIcon src={chisburgerPizza}></StyledIcon>
-
-      <StyledName>{item.name}</StyledName>
+      <Link to={`/pizzainfo/${item.id}`}>
+        <StyledIcon src={chisburgerPizza}></StyledIcon>
+      </Link>
+      <StyledName>{itemPizza.name}</StyledName>
 
       <StyledSorting>
         <StyledDough>
           <StyledItem
             onClick={() => {
-              setStateDough1(1);
-              setStateDough2(0);
+              setItemPizza({ ...itemPizza, cake: "Тонкое" });
             }}
-            active={stateDough1}
+            active={itemPizza.cake}
           >
             тонкое
           </StyledItem>
-          <StyledItem
+          <StyledItem2
             onClick={() => {
-              setStateDough2(1);
-              setStateDough1(0);
+              setItemPizza({ ...itemPizza, cake: "традиционное" });
             }}
-            active={stateDough2}
+            active={itemPizza.cake}
           >
             традиционное
-          </StyledItem>
+          </StyledItem2>
         </StyledDough>
+
         <StyledSize>
-          <StyledItem26
-            onClick={() => {
-              setStateSize(26);
-            }}
-            sizePizza={stateSize}
-          >
-            26 см
-          </StyledItem26>
-          <StyledItem30
-            onClick={() => {
-              setStateSize(30);
-            }}
-            sizePizza={stateSize}
-          >
-            30 см
-          </StyledItem30>
-          <StyledItem40
-            onClick={() => {
-              setStateSize(40);
-            }}
-            sizePizza={stateSize}
-          >
-            40 см
-          </StyledItem40>
+          {itemPizza.possibleSize["26"] && (
+            <StyledItem26
+              onClick={() => {
+                setItemPizza({
+                  ...itemPizza,
+                  size: "26",
+                  price: itemPizza.possiblePrice["26"],
+                });
+              }}
+              sizePizza={itemPizza.size}
+            >
+              26 см
+            </StyledItem26>
+          )}
+          {itemPizza.possibleSize["30"] && (
+            <StyledItem30
+              onClick={() => {
+                setItemPizza({
+                  ...itemPizza,
+                  size: "30",
+                  price: itemPizza.possiblePrice["30"],
+                });
+              }}
+              sizePizza={itemPizza.size}
+            >
+              30 см
+            </StyledItem30>
+          )}
+          {itemPizza.possibleSize["40"] === true ? (
+            <StyledItem40
+              onClick={() => {
+                setItemPizza({
+                  ...itemPizza,
+                  size: "40",
+                  price: itemPizza.possiblePrice["40"],
+                });
+              }}
+              sizePizza={itemPizza.size}
+            >
+              40 см
+            </StyledItem40>
+          ) : (
+            ""
+          )}
         </StyledSize>
       </StyledSorting>
 
       <StyledPriceAndButton>
-        <StyledPrice>{item.price}</StyledPrice>
+        <StyledPrice>{itemPizza.price}</StyledPrice>
         <StyledButton
           onClick={() => {
-            storePizza.addPizzaShoppingCart(item);
+            storePizza.addPizzaShoppingCart(itemPizza);
           }}
-          countPizza={storePizza.countPizzaById(item)}
+          countPizza={storePizza.countPizzaById(itemPizza)}
         >
           + Добавить{" "}
-          {storePizza.countPizzaById(item) === 0
+          {storePizza.countPizzaById(itemPizza) === 0
             ? ""
-            : storePizza.countPizzaById(item)}
+            : storePizza.countPizzaById(itemPizza)}
         </StyledButton>
       </StyledPriceAndButton>
     </WrapperPizzaItem>
   );
 });
-const StyledItem26 = styled.div<{ sizePizza?: number }>`
+const StyledItem26 = styled.div<{ sizePizza?: string }>`
   cursor: pointer;
-  background: ${(props) => (props.sizePizza === 26 ? "white" : "")};
+  ${(props) => (props) =>
+    props.sizePizza === "26" &&
+    css`
+      background: #eb5a1e;
+      color: white;
+      border-radius: 5px;
+      padding: 2px;
+    `}
 `;
-const StyledItem30 = styled.div<{ sizePizza?: number }>`
+const StyledItem30 = styled.div<{ sizePizza?: string }>`
   cursor: pointer;
-  background: ${(props) => (props.sizePizza === 30 ? "white" : "")};
+  ${(props) => (props) =>
+    props.sizePizza === "30" &&
+    css`
+      background: #eb5a1e;
+      color: white;
+      border-radius: 5px;
+      padding: 2px;
+    `}
 `;
-const StyledItem40 = styled.div<{ sizePizza?: number }>`
+const StyledItem40 = styled.div<{ sizePizza?: string }>`
   cursor: pointer;
-  background: ${(props) => (props.sizePizza === 40 ? "white" : "")};
+  ${(props) => (props) =>
+    props.sizePizza === "40" &&
+    css`
+      background: #eb5a1e;
+      color: white;
+      border-radius: 5px;
+      padding: 2px;
+    `}
 `;
 
 const StyledPriceAndButton = styled.div`
@@ -104,6 +144,9 @@ const StyledPriceAndButton = styled.div`
   align-self: center;
 `;
 const StyledPrice = styled.div`
+  &::after {
+    content: " \\20BD";
+  }
   font-style: normal;
   font-weight: 700;
   font-size: 21px;
@@ -118,7 +161,7 @@ const StyledButton = styled.div<{ countPizza?: number }>`
   color: #eb5a1e;
   padding: 2px 10px 2px 10px;
   background: ${(props) => (props.countPizza !== 0 ? " #eb5a1e" : "")};
-  color: ${(props) => (props.countPizza !== 0 ? " white" : "")};
+  color: ${(props) => (props.countPizza !== 0 ? "white" : "")};
   &:hover {
     background: #eb5a1e;
     color: white;
@@ -134,13 +177,43 @@ const WrapperPizzaItem = styled.div`
   margin-bottom: 20px;
   align-items: center;
 `;
-const StyledItem = styled.div<{ active?: number }>`
-  padding: 5px;
+const StyledItem = styled.div<{ active?: string }>`
   margin: 5px;
   cursor: pointer;
   border-radius: 5px;
-  background: ${(props) => {
-    return props.active === 1 ? "white" : "";
+  padding: 2px;
+
+  ${(props) => {
+    if (props.active === "Тонкое") {
+      return css`
+        background: #eb5a1e;
+        color: white;
+      `;
+    }
+    if (props.active === "традиционное") {
+      return css`
+        color: black;
+      `;
+    }
+  }};
+`;
+const StyledItem2 = styled.div<{ active?: string }>`
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 2px;
+  ${(props) => {
+    if (props.active === "Тонкое") {
+      return css`
+        color: black;
+      `;
+    }
+    if (props.active === "традиционное") {
+      return css`
+        background: #eb5a1e;
+        color: white;
+      `;
+    }
   }};
 `;
 const StyledSize = styled.div`

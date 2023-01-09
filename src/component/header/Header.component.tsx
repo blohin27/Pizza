@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import logo from "../../Icon/logo.png";
-import card from "../../Icon/card.png";
+import cart from '../../Icon/cart.png';
 import { Link } from "react-router-dom";
 import { storePizza } from "../../store";
 import { observer } from "mobx-react";
@@ -27,7 +27,7 @@ const HeaderComponent = observer(() => {
           <StyledVerticalLine />
           <StyledCountItems>
             <StyledIconCard>
-              <img src={card} />
+              <img src={cart} />
             </StyledIconCard>
             <div>{storePizza.shoppingCart.count}</div>
           </StyledCountItems>
