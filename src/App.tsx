@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { LandingCpomponent } from "./pages/landing";
 import { Routes, Route, Link } from "react-router-dom";
 import { Cart } from "./pages";
-import {PizzaInfoComponent} from "./pages/pizzaInfo";
+import { PizzaInfoComponent } from "./pages/pizzaInfo";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Routes>
             <Route path={"/"} element={<LandingCpomponent />} />
             <Route path={"/cart"} element={<Cart />} />
-            <Route path={"/pizzainfo/:id"} element={<PizzaInfoComponent/>} />
+            <Route path={"/pizzainfo/:id"} element={<PizzaInfoComponent />} />
           </Routes>
         </StyledApp>
       </StyledBackground>
