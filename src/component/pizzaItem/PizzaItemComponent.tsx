@@ -137,13 +137,12 @@ const StyledItem40 = styled.div<{ sizePizza?: string }>`
 
 const StyledPriceAndButton = styled.div`
   margin-top: 10px;
-  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: center;
+  width: 100%;
+  justify-content: space-around;
 `;
 const StyledPrice = styled.div`
+  display: flex;
   &::after {
     content: " \\20BD";
   }
@@ -155,6 +154,7 @@ const StyledPrice = styled.div`
   color: #000000;
 `;
 const StyledButton = styled.div<{ countPizza?: number }>`
+  display: flex;
   cursor: pointer;
   border: 2px solid #eb5a1e;
   border-radius: 25px;
@@ -171,10 +171,7 @@ const StyledButton = styled.div<{ countPizza?: number }>`
 const WrapperPizzaItem = styled.div`
   display: flex;
   flex-direction: column;
-  width: 200px;
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 20px;
+  padding: 5px;
   align-items: center;
 `;
 const StyledItem = styled.div<{ active?: string }>`

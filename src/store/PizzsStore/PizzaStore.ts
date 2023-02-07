@@ -1,4 +1,4 @@
-import { autorun, makeAutoObservable, toJS } from "mobx";
+import { autorun, makeAutoObservable, reaction, toJS } from "mobx";
 
 interface sizePizza {
   26: boolean;
@@ -63,10 +63,39 @@ class PizzsStore {
       possiblePrice: { 26: 600, 30: 700, 40: 800 },
       cake: "Тонкое",
     },
+    {
+      id: 5,
+      name: "Сицилийская",
+      size: "26",
+      price: 600,
+      possibleSize: { 26: true, 30: true, 40: true },
+      possiblePrice: { 26: 600, 30: 700, 40: 800 },
+      cake: "Тонкое",
+    },
+    {
+      id: 6,
+      name: "Сицилийская",
+      size: "26",
+      price: 600,
+      possibleSize: { 26: true, 30: true, 40: true },
+      possiblePrice: { 26: 600, 30: 700, 40: 800 },
+      cake: "Тонкое",
+    },
+    {
+      id: 7,
+      name: "Сицилийская",
+      size: "26",
+      price: 600,
+      possibleSize: { 26: true, 30: true, 40: true },
+      possiblePrice: { 26: 600, 30: 700, 40: 800 },
+      cake: "Тонкое",
+    },
   ];
   shoppingCart: IShoppingCart = { items: [], count: 0 };
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
+
+    // reaction(()=>this.shoppingCart,(sc)=>{}) должен вызваться один раз
   }
 
   getItems() {
@@ -149,29 +178,24 @@ class PizzsStore {
     this.shoppingCart.count = 0;
   }
   deletePizzaIndividual(item: PizzaItem) {
-
     const newArrayPizza = this.shoppingCart.items.filter((currentValue) => {
       if (JSON.stringify(currentValue) !== JSON.stringify(item)) {
-
         this.shoppingCart.count = this.shoppingCart.count - 1;
 
         return true;
-
       } else return false;
-
     });
     storePizza.shoppingCart.items = newArrayPizza;
   }
   deletePizzaIndividualOne(item: PizzaItem) {
-
-     for(let value of this.shoppingCart.items){
-            if (JSON.stringify(value)===JSON.stringify(item)){
-               let index =  this.shoppingCart.items.indexOf(item)
-              this.shoppingCart.items.splice(index,1)
-              this.shoppingCart.count = this.shoppingCart.count - 1;
-              break
-            }
-     }
+    for (let value of this.shoppingCart.items) {
+      if (JSON.stringify(value) === JSON.stringify(item)) {
+        let index = this.shoppingCart.items.indexOf(item);
+        this.shoppingCart.items.splice(index, 1);
+        this.shoppingCart.count = this.shoppingCart.count - 1;
+        break;
+      }
+    }
   }
 }
 

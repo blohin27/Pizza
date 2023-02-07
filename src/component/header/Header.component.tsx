@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import logo from "../../Icon/logo.png";
-import cart from '../../Icon/cart.png';
+import cart from "../../Icon/cart.png";
 import { Link } from "react-router-dom";
 import { storePizza } from "../../store";
 import { observer } from "mobx-react";
@@ -11,16 +11,16 @@ const HeaderComponent = observer(() => {
   return (
     <WrapHeader>
       <Link to={"/"} referrerPolicy={"origin"}>
-      <StyledLogo>
-        <StyledLogoIcon>
-          <img src={logo} />
-        </StyledLogoIcon>
-        <div>
-          <StyledNameProject>REACT PIZZA</StyledNameProject>
-          <StyledSlogan>самая вкусная пицца во вселенной</StyledSlogan>
-        </div>
-      </StyledLogo>
-        </Link>
+        <StyledLogo>
+          <StyledLogoIcon>
+            <img src={logo} />
+          </StyledLogoIcon>
+          <div>
+            <StyledNameProject>REACT PIZZA</StyledNameProject>
+            <StyledSlogan>самая вкусная пицца во вселенной</StyledSlogan>
+          </div>
+        </StyledLogo>
+      </Link>
       <Link to={"/cart"}>
         <ShoppingCart>
           <StyledPrice>{storePizza.getAllPrice} Рублей</StyledPrice>
@@ -64,6 +64,12 @@ const ShoppingCart = styled.div`
 
   background: #fe5f1e;
   border-radius: 30px;
+  @media (max-width: 590px) {
+    margin-top: 10px;
+    margin: 0 auto;
+    justify-content: center;
+    width: 150px;
+  }
 `;
 const StyledLogo = styled.div`
   display: flex;
@@ -98,6 +104,10 @@ const WrapHeader = styled.div`
   justify-content: space-between;
   padding-bottom: 30px;
   border-bottom: 2px solid #d9d9d9;
+  @media (max-width: 590px) {
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 const StyledLine = styled.div`
   height: 1px;

@@ -63,10 +63,15 @@ export const SortingComponent = () => {
   );
 };
 const WrapSorting = styled.div`
+  @media (max-width: 787px) {
+    justify-content: center;
+  }
   margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
   justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 const Styled1 = styled.div<{ state?: number }>`
   cursor: pointer;

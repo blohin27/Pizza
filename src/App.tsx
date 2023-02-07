@@ -28,7 +28,6 @@ const StyledBackground = styled.div``;
 const StyledApp = styled.div`
   background: #ffdf8c;
   padding: 10px;
-  height: 100vh;
 `;
 
 export default App;
