@@ -21,7 +21,6 @@ export const LandingCpomponent = observer(() => {
 });
 
 const StyledWrapContent = styled.div`
-  border: 2px solid blue;
   display: flex;
   flex-direction: column;
   max-width: 699px;
